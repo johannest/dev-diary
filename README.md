@@ -8,7 +8,7 @@ Features:
  * Firebase provided google authentication
  * Simple offline support
  * Vaadin Grid for chronological diary
- * Vaadin Combobox for buzzword selction
+ * Vaadin Combobox for buzzword selection
  * ...
 
 Live demo: https://dev-diary-53a61.firebaseapp.com/
