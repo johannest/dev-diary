@@ -86,25 +86,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-slider {
         font-size: 1.15em;
         margin: 0;
-        width: 300px;
+        width: 320px;
+        margin-bottom: 15px;
       }
 
     </style>
 
     <vaadin-combo-box
-      label="Buzzword"
+      label="Select Buzzword"
       id="title"
       allow-custom-value
       readonly=[[!editable]]
       items="[[buzzwords]]">
     </vaadin-combo-box>
-    <iron-autogrow-textarea
-      id="body"
-      placeholder="Tap to edit description"
-      class$="[[emptyClass(newbody, editable)]]"
-      readonly=[[!editable]]>
-    </iron-autogrow-textarea>
-    <p>Delta (1-10, where 10 = a book/course):</p>
+    <p>Slide Delta (1-10, where 10 = a book/course):</p>
     <paper-slider
       id="delta"
       snaps
@@ -116,6 +111,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       readonly=[[!editable]]
     >
     </paper-slider>
+    <iron-autogrow-textarea
+      id="body"
+      placeholder="Tap to edit description"
+      class$="[[emptyClass(newbody, editable)]]"
+      readonly=[[!editable]]>
+    </iron-autogrow-textarea>
   </template>
   <script>
     Polymer({
