@@ -96,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       label="Select Buzzword"
       id="title"
       allow-custom-value
-      readonly=[[!editable]]
+      read-only=[[!editable]]
       items="[[buzzwords]]">
     </vaadin-combo-box>
     <p>Slide Delta (1-10, where 10 = a book/course):</p>
@@ -163,7 +163,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         itemsx: {
           type: Array,
           notify: true,
-          value: ['gwt','scala','java-se','java8','java-ee','sass','css','gatling','jmeter','estimation','rest','webservices','osgi','ddd','vaadin-charts']
+          value: ['gwt','scala','java-se','java8','java-ee','sass','css','gatling','jmeter','estimation','rest','webservices','osgi','ddd','vaadin-charts','js','polymer','pwa']
         }
       },
 
@@ -186,10 +186,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       updateTextContent(title, body, delta, itemsx) {
+        if (!this.$.title.items) {
+          this.$.title.items = itemsx;
+        }
         this.$.title.value = title;
         this.$.body.value = body;
         this.$.delta.value = delta;
-        this.$.title.items = itemsx;
       },
 
       onInput() {

@@ -12,3 +12,12 @@ Features:
  * ...
 
 Live demo: https://dev-diary-53a61.firebaseapp.com/
+
+TODO:
+ * Faster loading, splash screen
+ * Finetuning: smoother animations, combobox focus issue, dynamic/db buzzwords
+ * Edit existing entry
+ * Export to CSV
+ * Show last month/quarter/half year filters
+ * Basic charts like "Cumulative learning curve"
+ * More advanced charts eg. "Learned amount by buzzwords" etc.

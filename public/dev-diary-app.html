@@ -5,6 +5,7 @@
 <link rel="import" href="/bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="/bower_components/vaadin-charts/vaadin-line-chart.html">
 <link rel="import" href="/bower_components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="/bower_components/css-pie/css-pie.html">
 
 <link rel="import" href="dd-note.html">
 <link rel="import" href="dd-editor.html">
@@ -87,20 +88,6 @@
       </table>
     </vaadin-grid>
   </div>
-  <!--<div>
-    <vaadin-bar-chart
-      id="notechart"
-      data=[[persistedNotes]]>
-      <chart-title>Notes by week</chart-title>
-      <x-axis>
-        <chart-title>Week</chart-title>
-      </x-axis>
-      <y-axis>
-        <chart-title>Notes</chart-title>
-      </y-axis>
-    </vaadin-bar-chart>
-  </div>-->
-
   </template>
   <script>
     Polymer({
@@ -116,6 +103,9 @@
       },
 
       attached: function() {
+        this.$.notegrid.columns[2].renderer = function(cell) {
+          cell.element.innerHTML = "<css-pie name='delta' size='30' size-unit='px' base-color='#e8e8e8' slices='[{\"size\": \""+(10*cell.data)+"\", \"color\" : \"#0288d1\"}]'></css-pie>"
+        };
         this.$.notegrid.columns[3].renderer = function(cell) {
           var d = new Date(cell.data);
           cell.element.innerHTML = d.getMonth()+1 + "/" +d.getUTCDate() + "/" + d.getFullYear();
