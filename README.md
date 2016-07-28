@@ -17,7 +17,14 @@ TODO:
  * Faster loading, splash screen
  * Finetuning: smoother animations, combobox focus issue, dynamic/db buzzwords
  * Edit existing entry
+ * Note type selection: daily learning, book, course, certification
  * Export to CSV
  * Show last month/quarter/half year filters
  * Basic charts like "Cumulative learning curve"
  * More advanced charts eg. "Learned amount by buzzwords" etc.
+
+More development ideas
+ * Offline-first implementation
+ * Social media: endorsements etc. 
+ * compare your learning path to "an average" profile
+ * promote emerging new things eg. hot topics
