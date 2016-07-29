@@ -1,12 +1,12 @@
 {
   "short_name": "Dev's Diary",
-  "name": "Dev's Diary",
+  "name": "Developer's Learning Diary",
   "scope": "./",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "any",
   "theme_color": "#00B4EC",
-  "background_color": "#9C27B0",
+  "background_color": "white",
   "icons": [
   {
 		"src": "/android-chrome-192x192.png",

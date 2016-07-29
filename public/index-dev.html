@@ -1,3 +1,9 @@
+<!--
+Created by Johannes Tuikkala, with help of Google's note-app example
+@license
+Copyright (c) 2016 Johannes Tuikkala. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+-->
 <!doctype html>
 <html>
   <head>
@@ -17,10 +23,10 @@
         margin: 0;
       }
     </style>
-    <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="/bower_components/web-animations-js/web-animations.min.js"></script>
-    <link rel="import" href="/bower_components/platinum-sw/platinum-sw-elements.html">
-    <link rel="import" href="/bower_components/polymerfire/firebase-app.html">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="bower_components/web-animations-js/web-animations.min.js"></script>
+    <link rel="import" href="bower_components/platinum-sw/platinum-sw-elements.html">
+    <link rel="import" href="bower_components/polymerfire/firebase-app.html">
     <link rel="import" href="dev-diary-app.html">
   </head>
   <body>
@@ -40,6 +46,11 @@
       auth-domain="dev-diary-53a61.firebaseapp.com"
       database-url="https://dev-diary-53a61.firebaseio.com">
     </firebase-app>
-    <dev-diary-app>Loading...</dev-diary-app>
+    <dev-diary-app>
+      <div style="width:100%; height:100%; background-color:#0288d1; position: absolute; top: 0px;">
+          <h1 style="color:white; text-align: center;">Loading...</h1>
+          <h3 style="color:white; text-align: center;">This might take awhile for the first time.</h1>
+      </div>
+    </dev-diary-app>
   </body>
 </html>

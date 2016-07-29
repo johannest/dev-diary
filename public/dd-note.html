@@ -9,11 +9,11 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-<link rel="import" href="/bower_components/paper-styles/shadow.html">
-<link rel="import" href="/bower_components/paper-styles/typography.html">
-<link rel="import" href="/bower_components/vaadin-combo-box/vaadin-combo-box.html">
-<link rel="import" href="/bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
-<link rel="import" href="/bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="bower_components/paper-styles/shadow.html">
+<link rel="import" href="bower_components/paper-styles/typography.html">
+<link rel="import" href="bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="bower_components/paper-slider/paper-slider.html">
 <dom-module id="dd-note">
   <template>
     <style>
@@ -99,14 +99,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       read-only=[[!editable]]
       items="[[buzzwords]]">
     </vaadin-combo-box>
-    <p>Slide Delta (1-10, where 10 = a book/course):</p>
+    <p>Slide Delta (1-20, where 20 = a book/course):</p>
     <paper-slider
       id="delta"
       snaps
-      max-markers="10"
+      max-markers="20"
       min="1"
       step="1"
-      max="10"
+      max="20"
       pin
       readonly=[[!editable]]
     >

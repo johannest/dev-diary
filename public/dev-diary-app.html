@@ -1,11 +1,16 @@
-<link rel="import" href="/bower_components/polymer/polymer.html">
-<link rel="import" href="/bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="/bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
-<link rel="import" href="/bower_components/app-storage/app-network-status-behavior.html">
-<link rel="import" href="/bower_components/polymerfire/polymerfire.html">
-<link rel="import" href="/bower_components/vaadin-charts/vaadin-line-chart.html">
-<link rel="import" href="/bower_components/vaadin-grid/vaadin-grid.html">
-<link rel="import" href="/bower_components/css-pie/css-pie.html">
+<!--
+Created by Johannes Tuikkala, with help of Google's note-app example
+@license
+Copyright (c) 2016 Johannes Tuikkala. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+-->
+<link rel="import" href="bower_components/polymer/polymer-mini.html">
+<link rel="import" href="bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
+<link rel="import" href="bower_components/app-storage/app-network-status-behavior.html">
+<link rel="import" href="bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="bower_components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="bower_components/css-pie/css-pie.html">
 
 <link rel="import" href="dd-note.html">
 <link rel="import" href="dd-editor.html">
@@ -62,17 +67,6 @@
         data="{{notes}}"
         persisted-data="{{persistedNotes}}">
     </app-indexeddb-mirror>
-    <!--<div class="notes">
-      <template is="dom-repeat" items="[[persistedNotes]]" as="note">
-        <dd-note
-            id$="[[note.$key]]"
-            title="[[note.title]]"
-            body="[[note.body]]"
-            createtime="[[note.createtime]]"
-            on-tap="edit">
-        </dd-note>
-      </template>
-    </div>-->
   <div>
     <vaadin-grid
       id="notegrid"
@@ -85,6 +79,14 @@
           <col name="delta">
           <col name="createtime">
         </colgroup>
+        <thead>
+          <tr>
+            <th>Buzzword</th>
+            <th>Description</th>
+            <th>Delta</th>
+            <th>When</th>
+          </tr>
+      </thead>
       </table>
     </vaadin-grid>
   </div>
@@ -104,7 +106,7 @@
 
       attached: function() {
         this.$.notegrid.columns[2].renderer = function(cell) {
-          cell.element.innerHTML = "<css-pie name='delta' size='30' size-unit='px' base-color='#e8e8e8' slices='[{\"size\": \""+(10*cell.data)+"\", \"color\" : \"#0288d1\"}]'></css-pie>"
+          cell.element.innerHTML = "<css-pie name='delta' size='30' size-unit='px' base-color='#e8e8e8' slices='[{\"size\": \""+(5*cell.data)+"\", \"color\" : \"#0288d1\"}]'></css-pie>"
         };
         this.$.notegrid.columns[3].renderer = function(cell) {
           var d = new Date(cell.data);
