@@ -6,11 +6,12 @@ Simple learning diary progressive web application, especially designed for web a
 Features:
  * Firebase provided database
  * Firebase provided google authentication
- * Simple offline support
- * Vaadin Grid for chronological diary
- * Vaadin Combobox for buzzword selection
+ * vaadin-grid for chronological diary
+ * vaadin-combobox for buzzword selection
+ * vaadin-date-picker 
  * Splash screen
  * Edit existing entry
+ * Limited offline edit
 
 Live demo: https://dev-diary-53a61.firebaseapp.com/
 
