@@ -9,14 +9,14 @@ Features:
  * Simple offline support
  * Vaadin Grid for chronological diary
  * Vaadin Combobox for buzzword selection
- * ...
+ * Splash screen
+ * Edit existing entry
 
 Live demo: https://dev-diary-53a61.firebaseapp.com/
 
 TODO:
- * Faster loading, splash screen
+ 
  * Finetuning: smoother animations, combobox focus issue, dynamic/db buzzwords
- * Edit existing entry
  * Note type selection: daily learning, book, course, certification
  * Export to CSV
  * Show last month/quarter/half year filters
