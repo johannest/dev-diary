@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="bower_components/iron-icons/social-icons.html">
 <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="bower_components/app-storage/app-network-status-behavior.html">
+
 <dom-module id="na-toolbar">
   <template>
     <style>
@@ -52,8 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <iron-icon icon="social:school"></iron-icon>
     <h1>Dev's Learning Diary</h1>
-    <iron-icon icon="cloud" hidden$="[[!online]]"></iron-icon>
-    <iron-icon icon="cloud-off" hidden$="[[online]]"></iron-icon>
+    <iron-icon icon="[[computeCloudIcon(online)]]"></iron-icon>
     <paper-icon-button
         icon="[[computeLockIcon(signedIn)]]"
         disabled="[[!signedIn]]"
@@ -64,9 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'na-toolbar',
 
-      behaviors: [
-        Polymer.AppNetworkStatusBehavior
-      ],
+      behaviors: [Polymer.AppNetworkStatusBehavior],
 
       properties: {
         signedIn: {
@@ -78,6 +76,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       computeLockIcon: function(signedIn) {
         return signedIn ? 'lock-open' : 'lock';
+      },
+
+      computeCloudIcon: function(online) {
+        return online ? 'cloud' : 'cloud-off';
       },
 
       lock: function() {
