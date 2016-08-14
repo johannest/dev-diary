@@ -40,7 +40,6 @@ This code may only be used under the BSD style license found at http://polymer.g
     <paper-fab
         icon="add"
         on-tap="create"
-        disabled="[[!online]]"
         aria-label="Add note">
     </paper-fab>
     <dd-editor
@@ -58,7 +57,7 @@ This code may only be used under the BSD style license found at http://polymer.g
         id="query"
         app-name="dev-diary"
         path="/notes/[[user.uid]]"
-        order-by-child="createtimeinv"
+        order-by-child="learnedatinv"
         data="{{notes}}">
     </firebase-query>
     <app-indexeddb-mirror
@@ -70,6 +69,7 @@ This code may only be used under the BSD style license found at http://polymer.g
   <div>
     <vaadin-grid
       id="notegrid"
+      selection-mode="single"
       items=[[persistedNotes]]
       >
       <table>
@@ -77,7 +77,7 @@ This code may only be used under the BSD style license found at http://polymer.g
           <col name="title">
           <col name="body">
           <col name="delta">
-          <col name="createtime">
+          <col name="learnedat">
         </colgroup>
         <thead>
           <tr>
@@ -112,6 +112,10 @@ This code may only be used under the BSD style license found at http://polymer.g
           var d = new Date(cell.data);
           cell.element.innerHTML = d.getMonth()+1 + "/" +d.getUTCDate() + "/" + d.getFullYear();
         };
+        this.$.notegrid.addEventListener('selected-items-changed', function () {
+          var index = this.$.notegrid.selection.selected();
+          this.editNote(this.$.notegrid.items[index]);
+        }.bind(this));
       },
 
       signIn: function() {
@@ -130,14 +134,19 @@ This code may only be used under the BSD style license found at http://polymer.g
         return this.online;
       },
 
-      edit(event) {
-        if (this.isEditable) {
-          var noteElement = Polymer.dom(event).localTarget;
-          this.editableNoteId = this.toEditableId(noteElement.id);
-          var self = this;
+      editNote(note) {
+        if (note) {
+          var noteElement = document.createElement('dd-note');
+          this.editableNoteId = this.toEditableId(note.$key);
+
+          noteElement.title = note.title;
+          noteElement.body = note.body;
+          noteElement.delta = note.delta;
+          noteElement.learnedat = note.learnedat;
+
           this.$.document.transactionsComplete.then(function() {
-            self.$.editor.open(noteElement);
-          });
+            this.$.editor.open(noteElement);
+          }.bind(this));
         }
       },
 
@@ -164,10 +173,9 @@ This code may only be used under the BSD style license found at http://polymer.g
         }
 
         if (this.$.query && this.$.query.refresh) {
-          var self = this;
           changeCommits.then(function() {
-            self.$.query.refresh();
-          });
+            this.$.query.refresh();
+          }.bind(this));
         }
       },
 
@@ -175,12 +183,10 @@ This code may only be used under the BSD style license found at http://polymer.g
         if (this.$.document.isNew &&
             this.editableNote.title) {
 
-          var self = this;
           return this.$.document.save(this.notesPath).then(function() {
-            self.$.document.reset();
-          });
+            this.$.document.reset();
+          }.bind(this));
         }
-
         return Promise.resolve();
       },
 
@@ -188,7 +194,6 @@ This code may only be used under the BSD style license found at http://polymer.g
         if (!this.$.document.isNew) {
           this.$.document.destroy();
         }
-
         return Promise.resolve();
       },
 

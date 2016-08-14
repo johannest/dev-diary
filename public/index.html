@@ -18,12 +18,31 @@ This code may only be used under the BSD style license found at http://polymer.g
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="theme-color" content="#ffffff">
 
+    <script>
+      // setup Polymer options
+      window.Polymer = {lazyRegister: true, dom: 'shadow'};
+
+      // load webcomponents polyfills
+      (function() {
+        if ('registerElement' in document
+            && 'import' in document.createElement('link')
+            && 'content' in document.createElement('template')) {
+          // browser has web components
+        } else {
+          // polyfill web components
+          var e = document.createElement('script');
+          e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+          document.head.appendChild(e);
+        }
+      })();
+    </script>
+
     <style>
       body {
         margin: 0;
       }
     </style>
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
     <script src="bower_components/web-animations-js/web-animations.min.js"></script>
     <link rel="import" href="bower_components/platinum-sw/platinum-sw-elements.html">
     <link rel="import" href="bower_components/polymerfire/firebase-app.html">

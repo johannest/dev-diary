@@ -82,9 +82,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <div id="background"></div>
-    <dd-note id="note" title="{{note.title}}" body="{{note.body}}" createtime="{{note.createtime}}" createtimeinv="{{note.createtimeinv}}" delta="{{note.delta}}" editable></dd-note>
+    <dd-note
+      id="note"
+      title="{{note.title}}"
+      body="{{note.body}}"
+      learnedat="{{note.learnedat}}"
+      items={{note.items}}
+      delta="{{note.delta}}">
+    </dd-note>
     <div class="controls">
-      <paper-button on-tap="delete">Cancel</paper-button>
+      <paper-button on-tap="delete">Delete</paper-button>
       <paper-button on-tap="save">Done</paper-button>
     </div>
   </template>
@@ -119,12 +126,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       create() {
         this._setOpened(true);
-        this.note = { title: '', body: '', createtime: new Date().getTime(), createtimeinv: 1/new Date().getTime(), delta: 1};
+        var timenow = new Date().getTime();
+        this.note = { title: '', body: '', learnedat: timenow, delta: 1,
+                      items: ['gwt','scala','java-se','java8','java-ee','sass','css','gatling','jmeter','estimation','rest','webservices','osgi','ddd','vaadin-charts','js','polymer','pwa'],
+                      createtime: timenow, learnedatinv: -timenow};
+
         this.transitionInFrom(this.getBoundingClientRect());
       },
 
-
       save() {
+        this.$.note.updateLearnedDate();
         this.close('save');
       },
 
@@ -139,11 +150,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         this.fire('close', detail, { bubbles: false });
-        var self = this;
         this.transitionOut().then(function() {
-          Polymer.dom(self).classList.remove('open');
-          self._setOpened(false);
-        });
+          Polymer.dom(this).classList.remove('open');
+          this._setOpened(false);
+        }.bind(this));
       },
 
       transitionInFrom(rect) {
@@ -168,10 +178,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           transform: `scale(${targetRect.width / 256 * 4})`
         }], 800);
 
-        var self = this;
         noteAnimation.addEventListener('finish',function() {
-          Polymer.dom(self).classList.add('open');
-        });
+          Polymer.dom(this).classList.add('open');
+        }.bind(this));
       },
 
       transitionOut() {
@@ -190,7 +199,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           transform: 'translateY(10px) scale(0.9)',
           opacity: 0
         }], 500);
-
 
         return new Promise(function(resolve) {
           animation.addEventListener('finish', resolve);

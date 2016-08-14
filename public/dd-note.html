@@ -1,5 +1,5 @@
 <!--
-Customized from Google's na-note.html example code by Johannes Tuikkala
+Highly customized from Google's na-note.html's example code by Johannes Tuikkala
 Original license:
 @license
 Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="bower_components/vaadin-combo-box/vaadin-combo-box.html">
 <link rel="import" href="bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="bower_components/vaadin-date-picker/vaadin-date-picker.html">
+
 <dom-module id="dd-note">
   <template>
     <style>
@@ -27,182 +29,116 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--shadow-elevation-2dp);
         border-radius: 2px;
       }
-
-      .hidden {
-        display: none;
-      }
-
-      h1 {
-        font-size: 1.15em;
-        margin: 0;
-        white-space: pre-wrap;
-      }
-
-      h1:not(.hidden)+p {
-        margin-top: 1em;
-      }
-
-      p {
-        margin: 0;
-        font-family: 'Roboto Slab', Times New Roman, serif;
-        font-size: 0.9em;
-        white-space: pre-wrap;
-      }
-      .placeholder:after {
-        content: 'Tap to edit';
-        opacity: 0.5;
-      }
-
-      .hidden {
-        display: none;
-      }
-
-      .empty {
-        font-style: italic;
-        color: #737373;
-        line-height: 0;
-        pointer-events: none;
-      }
-
-      thead {
-        display: none;
-        height: 0px;
-      }
-
       vaadin-combo-box {
         font-size: 1.15em;
         margin: 0;
         max-width: 300px;
         margin-bottom: 15px;
       }
-
       iron-autogrow-textarea {
         font-size: 1.15em;
         margin: 0;
         max-width: 300px;
         margin-bottom: 15px;
       }
-
       paper-slider {
         font-size: 1.15em;
         margin: 0;
-        width: 320px;
+        width: 300px;
         margin-bottom: 15px;
       }
-
+      vaadin-date-picker {
+        max-width: 300px;
+        --primary-color: #0288d1;
+      }
     </style>
 
     <vaadin-combo-box
-      label="Select Buzzword"
       id="title"
+      label="Select Buzzword"
       allow-custom-value
-      read-only=[[!editable]]
-      items="[[buzzwords]]">
+      value="{{title}}"
+      items="{{items}}">
     </vaadin-combo-box>
-    <p>Slide Delta (1-20, where 20 = a book/course):</p>
+    <p>Delta (1-20, where 20 = a book/course):</p>
     <paper-slider
       id="delta"
+      value="{{delta}}"
       snaps
       max-markers="20"
       min="1"
       step="1"
       max="20"
       pin
-      readonly=[[!editable]]
     >
     </paper-slider>
     <iron-autogrow-textarea
       id="body"
-      placeholder="Tap to edit description"
-      class$="[[emptyClass(newbody, editable)]]"
-      readonly=[[!editable]]>
+      bind-value="{{body}}"
+      placeholder="Tap to edit description">
     </iron-autogrow-textarea>
+    <vaadin-date-picker
+      id="learnedat"
+      label="When"
+      value="{{parseTimeToStr(learnedat)}}"
+      >
+    </vaadin-date-picker>
   </template>
   <script>
     Polymer({
       is: 'dd-note',
 
       properties: {
-        editable: {
-          type: Boolean,
-          reflectToAttribute: true,
-          notify: true,
-          value: false
-        },
-
         title: {
           type: String,
           notify: true,
           value: ''
         },
-
         body: {
           type: String,
           notify: true,
           value: ''
         },
-
-        createtime: {
-          type: Number,
-          notify: true,
-          value: new Date().getTime()
-        },
-
         delta: {
           type: Number,
           notify: true,
           value: 1
         },
-
-        createtimeinv: {
+        learnedat: {
           type: Number,
           notify: true,
-          value: 1/new Date().getTime()
+          value: new Date().getTime()
         },
-
-        itemsx: {
+        items: {
           type: Array,
           notify: true,
-          value: ['gwt','scala','java-se','java8','java-ee','sass','css','gatling','jmeter','estimation','rest','webservices','osgi','ddd','vaadin-charts','js','polymer','pwa']
+          value: function() {
+            return [];
+          }
         }
       },
 
-      listeners: {
-        input: 'onInput',
-        change: 'onInput',
-        select: 'onInput'
-      },
-
-      observers: [
-        'updateTextContent(title, body, delta, itemsx)'
-      ],
-
-      emptyClass(content, editable) {
-        if (editable) {
-          return !content ? 'placeholder' : '';
-        } else {
-          return !content ? 'hidden' : '';
+      parseTimeToStr(time) {
+        var d = new Date(time);
+        var dayStr = d.getUTCDate();
+        var monthStr = d.getUTCMonth()+1;
+        if (d.getUTCDate()<10) {
+          dayStr = "0"+dayStr;
         }
-      },
-
-      updateTextContent(title, body, delta, itemsx) {
-        if (!this.$.title.items) {
-          this.$.title.items = itemsx;
+        if (d.getUTCMonth()<9) {
+          monthStr = "0"+monthStr;
         }
-        this.$.title.value = title;
-        this.$.body.value = body;
-        this.$.delta.value = delta;
+        var datestr = d.getFullYear()+"-"+monthStr+"-"+dayStr;
+        return datestr;
       },
 
-      onInput() {
+      updateLearnedDate() {
         this.async(function() {
-          console.log(this.$.delta.value);
-          this.title = this.$.title.value;
-          this.body = this.$.body.value;
-          this.delta = this.$.delta.value;
-        });
+          if (typeof this.$.learnedat.value != 'undefined') {
+            this.learnedat = Date.parse(this.$.learnedat.value);
+          }
+        }.bind(this));
       }
-
     })
   </script>
 </dom-module>
